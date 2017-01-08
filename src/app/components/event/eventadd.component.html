@@ -1,0 +1,32 @@
+<md-card>
+    <md-card-content>
+        <md-grid-list cols="{{1 + file_srcs.length}}" rowHeight="120">
+            <md-grid-tile rowspan="1">
+                <label class="uploader" ondragover="return false;"
+                       [class.loaded]="loaded" 
+                       [style.outlineColor]="dragging ? activeColor : baseColor"
+                       (dragenter)="handleDragEnter()"
+                       (dragleave)="handleDragLeave()"
+                       (drop)="handleDrop($event)">
+
+                    <i class="icon icon-upload" 
+                       [style.color]="dragging 
+                                      ? ((imageSrc.length > 0) ? overlayColor : activeColor)
+                                      : ((imageSrc.length > 0) ? overlayColor : baseColor)"></i>
+
+                    <input type="file" name="file" accept="image/*"
+                           (change)="handleInputChange($event)" multiple>
+                </label>
+            </md-grid-tile>
+            <md-grid-tile *ngFor="let img of file_srcs">
+                <img [src]="img[2]"/>
+            </md-grid-tile>
+            <md-grid-tile *ngIf="file_srcs.length > 0" colspan="{{1 + file_srcs.length}}">
+                <button md-icon-button (click)="sendAll()">
+                    <md-icon>add</md-icon>
+                    Envoyer
+                </button>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+</md-card>

@@ -1,0 +1,63 @@
+<template [ngIf]="(store.select('cache')| async).cache")>
+        <md-sidenav-container>
+            <md-sidenav #start opened mode="side">
+                <md-list>
+                    <h3 md-subheader>
+                        Evénements
+                        <button md-icon-button (click)="addEvent()">
+                            <md-icon>add</md-icon>
+                        </button>
+                    </h3>
+                    
+                    <template [ngIf]="actionservice.action('get_lastsphere', '') && actionservice.action('get_lastevents', '')">
+                        <md-list-item *ngFor="let event of actionservice.action('get_lastevents', '')">
+                            <button md-button md-line (click)="setEvent(event)">
+                                {{event}}
+                            </button>
+                            <md-icon>more_vert</md-icon>
+                        </md-list-item>
+                    </template>
+                    <md-divider></md-divider>
+                    <h3 md-subheader>Abonnements </h3>
+                    <md-list-item *ngFor="let abo of abos">                                         <button md-button md-line (click)="setAbo(event)">
+                            {{abo.name}}
+                        </button>
+                        <md-icon>more_vert</md-icon>
+                    </md-list-item>
+                </md-list>
+            </md-sidenav>
+            
+            <event></event>
+
+            <md-sidenav #end align="end" opened mode="side">
+                <md-list>
+                    <md-list-item>
+                        <md-icon>cloud</md-icon>
+                        <h4 md-line>Claoudy</h4>
+                        <md-icon color="warn">power_settings_new</md-icon>
+                    </md-list-item>                    <md-list-item>
+                        <img md-list-avatar [src]="localDevice.image" alt="Image of {{localDevice.infos?.hostname}}" #tooltip="mdTooltip"
+                             [md-tooltip]="message"
+                             [tooltip-position]="position">
+                        <h4 md-line>{{localDevice.infos?.hostname}}</h4>
+                        <md-icon color="accent">power_settings_new</md-icon>
+                    </md-list-item>
+                    <md-list-item *ngFor="let device of devices">
+                        <img md-list-avatar [src]="device.image" alt="Image of {{device.infos.hostname}}">
+                        <h4 md-line>{{device.infos.hostname}}</h4>
+                        <md-icon color="warn">power_settings_new</md-icon>
+                </md-list-item>
+                <md-divider></md-divider>
+                <h3 md-subheader>Membres</h3>
+                    <md-list-item *ngFor="let message of messages">
+                        <img md-list-avatar [src]="message.image" alt="Image of {{message.from}}">
+                        <h4 md-line>{{message.from}}</h4>
+                        <p md-line>
+                            <span>{{message.subject}} -- </span>
+                            <span class="demo-secondary-text">{{message.message}}</span>
+                        </p>
+                    </md-list-item>
+                </md-list>
+            </md-sidenav>
+        </md-sidenav-container>
+    </template>
