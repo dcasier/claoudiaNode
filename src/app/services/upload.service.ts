@@ -50,4 +50,21 @@ export class UploadService {
         xhr.send(formData);
     });
   }
+  
+  getMediaRequest(url: string, headers: any): Observable<any> {
+    return Observable.create(observer =>  {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "arraybuffer";
+
+        xhr.onload = function(oEvent) {
+          var blob = new Blob([xhr.response], {type: "image/png"});
+          // ...
+        };
+
+        xhr.send();
+    
+    })
+  
+  }
 }
