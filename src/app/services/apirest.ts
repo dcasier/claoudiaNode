@@ -96,8 +96,8 @@ export class ApiRest {
       case 'UPLOAD':
 	    return this.uploadservice.makeFileRequest(context.url, this.postHeaders(), context.body);
       case 'DOWNLOAD':
-        this.uploadservice.getMediaRequest(context.url, this.postHeaders()).subscribe();
-        return this.getHttp(context.url);
+        return this.uploadservice.getMediaRequest(context.url, this.postHeaders());
+        //return this.getHttp(context.url);
       default:
         console.log('ApiRest - send');
         console.log('Not supported');

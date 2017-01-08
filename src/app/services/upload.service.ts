@@ -55,17 +55,20 @@ export class UploadService {
   
   getMediaRequest(url: string, headers: any): Observable<any> {
     return Observable.create(observer =>  {
+        console.log('- getMediaRequest');
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
+        xhr.setRequestHeader( 'accesskey', localStorage.getItem('accesskey') );
+        xhr.setRequestHeader( 'secretkey', localStorage.getItem('secretkey') );
         xhr.responseType = "arraybuffer";
 
         xhr.onload = function(oEvent) {
-          let blob = new Blob([xhr.response], {type: "image/png"});
-          saveAs.saveAs(blob, 'test.jpg');
+          observer.next(xhr);
+          observer.completed();
+          //saveAs.saveAs(blob, 'test.jpg');
         };
 
         xhr.send();
-    
     })
   
   }

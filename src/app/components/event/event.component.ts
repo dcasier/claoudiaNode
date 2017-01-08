@@ -6,12 +6,11 @@ import { Component,
 import { Store }           	from '@ngrx/store';
 import { ActionService }	from '../../services/action.service';
 
-import { DomSanitizer } from '@angular/platform-browser';
-//import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer }     from '@angular/platform-browser';
 
 import * as saveAs from 'file-saver';
 
-import { Md5 }              from 'ts-md5/dist/md5';
+//import { Md5 }              from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'event',
@@ -59,7 +58,8 @@ export class EventComponent implements OnInit {
                 let name = medias.medias[key].name;
                 console.log(medias.medias);
                 this.actionservice.action('get_media', name).subscribe(res => {
-                    //console.log(res);
+                    console.log('- EventComponent - ngOnInit - get_media');
+                    console.log(res);
                 /*
                     //console.log(Md5.hashStr(res._body));
                     let body     = res._body;
@@ -86,15 +86,12 @@ export class EventComponent implements OnInit {
                     this.medias['base64'][key] = base64;
                     */
                     
-                    let blob = new Blob([res._body],{
-                        type: res.headers.get("Content-Type")
+                    let blob = new Blob([res.response],{
+                        type: 'image/png'
                     });
+                        //type: res.headers.get("Content-Type")
                     //saveAs.saveAs(blob, name);
-                    let img = document.createElement("img");
-                    //img.src = ;
                     this.medias['base64'][key] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(blob));
-                    //window.open(this.medias['base64'][key]);
-                    //this.trustedUrl            = this.sanitizer.bypassSecurityTrustResourceUrl(this.medias['base64'][key]);
                     /*
                     this.medias['base64'][key] = new FileReader();
                     this.medias['base64'][key].onloadend = (ok) => {
@@ -109,7 +106,10 @@ export class EventComponent implements OnInit {
                     };
                     this.medias['base64'][key].readAsDataURL(blob);
                     */
-                });
+                },
+                err => console.log(err),
+                ()  => console.log('fin')
+                );
             }
         }
         
