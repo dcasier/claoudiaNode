@@ -59,7 +59,7 @@ export class EventComponent implements OnInit {
                 console.log(medias.medias);
                 this.actionservice.action('get_media', name).subscribe(res => {
                     console.log('- EventComponent - ngOnInit - get_media');
-                    console.log(res);
+                    //console.log(res);
                 /*
                     //console.log(Md5.hashStr(res._body));
                     let body     = res._body;
