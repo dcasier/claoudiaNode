@@ -59,7 +59,7 @@ export class EventComponent implements OnInit {
                 let name = medias.medias[key].name;
                 console.log(medias.medias);
                 this.actionservice.action('get_media', name).subscribe(res => {
-                    console.log(res);
+                    //console.log(res);
                 /*
                     //console.log(Md5.hashStr(res._body));
                     let body     = res._body;
@@ -82,14 +82,14 @@ export class EventComponent implements OnInit {
                     
                     console.log('base64');
                     
-                    console.log(base64);
+                    //console.log(base64);
                     this.medias['base64'][key] = base64;
                     */
                     
                     let blob = new Blob([res._body],{
                         type: res.headers.get("Content-Type")
                     });
-                    saveAs.saveAs(blob, name);
+                    //saveAs.saveAs(blob, name);
                     let img = document.createElement("img");
                     //img.src = ;
                     this.medias['base64'][key] = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(blob));

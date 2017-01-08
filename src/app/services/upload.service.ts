@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
+import * as saveAs from 'file-saver';
+
 @Injectable()
 export class UploadService {
 
@@ -58,8 +60,8 @@ export class UploadService {
         xhr.responseType = "arraybuffer";
 
         xhr.onload = function(oEvent) {
-          var blob = new Blob([xhr.response], {type: "image/png"});
-          // ...
+          let blob = new Blob([xhr.response], {type: "image/png"});
+          saveAs.saveAs(blob, 'test.jpg');
         };
 
         xhr.send();
