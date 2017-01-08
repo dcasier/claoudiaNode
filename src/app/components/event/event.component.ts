@@ -6,6 +6,10 @@ import { Component,
 import { Store }           	from '@ngrx/store';
 import { ActionService }	from '../../services/action.service';
 
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+//import { DomSanitizer } from '@angular/platform-browser';
+
+
 import { Md5 }              from 'ts-md5/dist/md5';
 
 @Component({
@@ -36,9 +40,12 @@ export class EventComponent implements OnInit {
   // TypeScript public modifiers
 
   medias = {};
+  
+  trustedUrl : SafeUrl;
     
   constructor(
     public store:           Store<any>,
+    private sanitizer:      DomSanitizer,
     public actionservice:   ActionService
     ) {
   }
@@ -53,13 +60,14 @@ export class EventComponent implements OnInit {
                 let name = medias.medias[key].name;
                 console.log(medias.medias);
                 this.actionservice.action('get_media', name).subscribe(res => {
+                    //console.log(res);
                 /*
                     //console.log(Md5.hashStr(res._body));
                     let body     = res._body;
                     let bodySize = body.length;
                     let uInt8Array = new Uint8Array(bodySize);
                     for(let i=bodySize; i--;) {
-                        uInt8Array[i] = body[i].charCodeAt(0)
+                        uInt8Array[i] = body[i].charCodeAt(0);
                     }
                     console.log(uInt8Array);
                     
@@ -74,17 +82,16 @@ export class EventComponent implements OnInit {
                     let base64 = "data:image/jpeg;base64,"+window.btoa(data);
                     
                     console.log('base64');
+                    
                     console.log(base64);
                     this.medias['base64'][key] = base64;
+                    */
                     
-                    let arrayBuffer = res.arrayBuffer();
-                */
-                    let blob = new Blob([res.arrayBuffer()],{
+                    let blob = new Blob([res._body],{
                         type: res.headers.get("Content-Type")
                     });
-                    console.log(res);
-                    console.log(blob);
-                    this.medias['base64'][key] = window.URL.createObjectURL(blob);
+                    this.medias['base64'][key] = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+                    //this.trustedUrl            = this.sanitizer.bypassSecurityTrustResourceUrl(this.medias['base64'][key]);
                     /*
                     this.medias['base64'][key] = new FileReader();
                     this.medias['base64'][key].onloadend = (ok) => {
