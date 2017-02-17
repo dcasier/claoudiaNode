@@ -64,7 +64,7 @@ export class UploadService {
 
         xhr.onload = function(oEvent) {
           observer.next(xhr);
-          observer.completed();
+          observer.complete();
           //saveAs.saveAs(blob, 'test.jpg');
         };
 

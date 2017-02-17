@@ -2,7 +2,7 @@ import { Injectable }      from '@angular/core';
 
 @Injectable()
 export class SphereAPI {
-proxy = 'https://192.168.1.11:8443/api';
+proxy = 'https://localhost:8443/api';
   APIv  = '/v0.1';
 
   actions = {

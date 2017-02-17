@@ -34,8 +34,7 @@ import { provideStore }       from '@ngrx/store';
 import { store }              from './services/reducer/index';
 
 import { UploadService }      from './services/upload.service';
-import { 
-         ApiRest } 	          from './services/apirest';
+import { ApiRest } 	          from './services/apirest';
 import { ContextService }     from './services/context.service';
 import { JsonService }        from './services/json.service';
 import { SphereAPI }          from './services/json.service/sphere.api';
